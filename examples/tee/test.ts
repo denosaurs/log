@@ -1,5 +1,16 @@
-import { assert } from "jsr:@std/assert";
-import { assertIsLog, createJSONLineStream } from "../../utils/test.ts";
+import { assert, assertStrictEquals } from "jsr:@std/assert";
+import { assertCollectLogLines } from "../../utils/test.ts";
+
+async function assertStdout(stdout: Uint8Array) {
+  const logs = await assertCollectLogLines(stdout);
+  assertStrictEquals(logs.length, 5);
+}
+
+async function assertStderr(stderr: Uint8Array) {
+  const logs = await assertCollectLogLines(stderr);
+  assertStrictEquals(logs.length, 1);
+  assertStrictEquals(logs[0].data[0], "This is going to stderr");
+}
 
 assert(
   (await new Deno.Command("npm", {
@@ -14,13 +25,8 @@ Deno.test("deno", async () => {
     cwd: import.meta.dirname,
   }).output();
   assert(success);
-  for await (const line of createJSONLineStream(stdout)) {
-    assertIsLog(line);
-  }
-
-  for await (const line of createJSONLineStream(stderr)) {
-    assertIsLog(line);
-  }
+  await assertStdout(stdout);
+  await assertStderr(stderr);
 });
 
 Deno.test("bun", async () => {
@@ -29,13 +35,8 @@ Deno.test("bun", async () => {
     cwd: import.meta.dirname,
   }).output();
   assert(success);
-  for await (const line of createJSONLineStream(stdout)) {
-    assertIsLog(line);
-  }
-
-  for await (const line of createJSONLineStream(stderr)) {
-    assertIsLog(line);
-  }
+  await assertStdout(stdout);
+  await assertStderr(stderr);
 });
 
 Deno.test("node", async () => {
@@ -44,11 +45,6 @@ Deno.test("node", async () => {
     cwd: import.meta.dirname,
   }).output();
   assert(success);
-  for await (const line of createJSONLineStream(stdout)) {
-    assertIsLog(line);
-  }
-
-  for await (const line of createJSONLineStream(stderr)) {
-    assertIsLog(line);
-  }
+  await assertStdout(stdout);
+  await assertStderr(stderr);
 });

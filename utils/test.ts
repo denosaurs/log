@@ -19,3 +19,14 @@ export function createJSONLineStream(...buffers: Uint8Array[]) {
     .pipeThrough(new TextLineStream())
     .pipeThrough(new JsonParseStream());
 }
+
+export async function assertCollectLogLines(
+  buffer: Uint8Array,
+): Promise<Log[]> {
+  const lines = [];
+  for await (const line of createJSONLineStream(buffer)) {
+    assertIsLog(line);
+    lines.push(line);
+  }
+  return lines;
+}

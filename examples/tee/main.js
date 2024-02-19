@@ -1,23 +1,45 @@
-// Ensure Bun compatibility
+// Ensure Bun compatibility. [It currently lacks support for TextEncoderStream](https://github.com/oven-sh/bun/issues/5648)
 import "@denosaurs/log/transforms/text_encoder_stream";
 
 import { ConsoleReadableStream } from "@denosaurs/log";
-import { stderr } from "@denosaurs/log/writables/stderr";
-import { stdout } from "@denosaurs/log/writables/stdout";
+
+import { StdoutWritableStream } from "@denosaurs/log/writables/stderr";
+import { StderrWritableStream } from "@denosaurs/log/writables/stdout";
+
+import { OmitLogLevelStream } from "@denosaurs/log/transforms/omit";
+import { PickLogLevelStream } from "@denosaurs/log/transforms/pick";
 
 import { JsonStringifyStream } from "@std/json";
 
+// Capture logs from the console
 const stream = new ConsoleReadableStream();
-const [a, b] = stream
+// Split the stream in two
+const [a, b] = stream.tee();
+
+a
+  // Omit only the error logs
+  .pipeThrough(new OmitLogLevelStream("error"))
+  // Stringify the logs JSON
   .pipeThrough(new JsonStringifyStream())
+  // Encode the output to an UTF-8 byte stream
   .pipeThrough(new TextEncoderStream())
-  .tee();
+  // Pipe the output to stdout
+  .pipeTo(new StdoutWritableStream());
 
-a.pipeTo(stderr);
-b.pipeTo(stdout);
+b
+  // Pick only the error logs
+  .pipeThrough(new PickLogLevelStream("error"))
+  // Stringify the logs JSON
+  .pipeThrough(new JsonStringifyStream())
+  // Encode the output to an UTF-8 byte stream
+  .pipeThrough(new TextEncoderStream())
+  // Pipe the output to stderr
+  .pipeTo(new StderrWritableStream());
 
-console.log("Hello, world!");
-console.group("Group 1");
-console.debug("Debug message");
-console.groupEnd();
-console.info("Info message");
+// Log some messages
+console.error("This is going to stderr");
+console.trace("This is going to stdout");
+console.debug("This is going to stdout");
+console.info("This is going to stdout");
+console.warn("This is going to stdout");
+console.log("This is going to stdout");

@@ -1,0 +1,7 @@
+{
+  "lock": false,
+  "imports": {
+    "@denosaurs/log": "jsr:@denosaurs/log",
+    "@std/json": "jsr:@std/json"
+  }
+}

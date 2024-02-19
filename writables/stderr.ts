@@ -4,7 +4,7 @@ let writable: WritableStream<Uint8Array>;
 
 switch (environment) {
   case "deno":
-    writable = globalThis.Deno.stdout.writable;
+    writable = globalThis.Deno.stderr.writable;
     break;
   case "bun": {
     // Once https://github.com/oven-sh/bun/issues/3927 is completed we can use the node code for bun.

@@ -1,5 +1,5 @@
 // Ensure Bun compatibility
-import "@denosaurs/log/transforms/text_encoder_stream.ts";
+import "@denosaurs/log/transforms/text_encoder_stream";
 
 import { ConsoleReadableStream } from "@denosaurs/log";
 import { stdout } from "@denosaurs/log/writables/stdout";

@@ -185,7 +185,6 @@ console.warn("This is going to stdout");
 console.log("This is going to stdout");
 ```
 
-
 ## Maintainers
 
 - Elias Sjögreen ([@eliassjogreen](https://github.com/eliassjogreen))

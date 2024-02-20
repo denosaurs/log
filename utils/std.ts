@@ -9,7 +9,7 @@ if (isNode) {
   ) => WritableStream<Uint8Array>;
 }
 
-export function getWriteableStdStream(
+export function getStdWritableStream(
   stream: "stdout" | "stderr",
 ): WritableStream<Uint8Array> {
   switch (environment) {
@@ -54,7 +54,5 @@ export function getWriteableStdStream(
         },
       });
     }
-    default:
-      throw new Error("Unsupported environment");
   }
 }

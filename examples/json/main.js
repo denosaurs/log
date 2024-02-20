@@ -3,19 +3,19 @@ import "@denosaurs/log/transforms/text_encoder_stream";
 
 import { ConsoleReadableStream } from "@denosaurs/log";
 
-import { StdoutWritableStream } from "@denosaurs/log/writables/stdout";
+import { getStdoutWritableStream } from "@denosaurs/log/writables/stdout";
 
 import { JsonStringifyStream } from "@std/json";
 
 // Capture logs from the console
 const stream = new ConsoleReadableStream();
 stream
-  // Stringify the logs JSON
+  // Stringify the logs to JSON
   .pipeThrough(new JsonStringifyStream())
   // Encode the output to an UTF-8 byte stream
   .pipeThrough(new TextEncoderStream())
   // Pipe the output to stdout
-  .pipeTo(new StdoutWritableStream());
+  .pipeTo(getStdoutWritableStream());
 
 // Log some messages
 console.log("Hello, world!");

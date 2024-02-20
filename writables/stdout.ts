@@ -1,10 +1,8 @@
-import { getWriteableStdStream } from "../utils/std.ts";
+import { getStdWritableStream } from "../utils/std.ts";
 
 /**
- * A runtime agnostic writable stream for stderr.
+ * Get a runtime agnostic writable stream for stdout.
  */
-export class StdoutWritableStream extends WritableStream<Uint8Array> {
-  constructor() {
-    super(getWriteableStdStream("stdout"));
-  }
+export function getStdoutWritableStream() {
+  return getStdWritableStream("stdout");
 }

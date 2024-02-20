@@ -14,7 +14,7 @@ async function assertStderr(stderr: Uint8Array) {
 
 assert(
   (await new Deno.Command("npm", {
-    args: ["install"],
+    args: ["install", "--force"],
     cwd: import.meta.dirname,
   }).spawn().status).success,
 );

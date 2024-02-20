@@ -3,8 +3,8 @@ import "@denosaurs/log/transforms/text_encoder_stream";
 
 import { ConsoleReadableStream } from "@denosaurs/log";
 
-import { getStderrWritableStream } from "@denosaurs/log/writables/stderr";
 import { getStdoutWritableStream } from "@denosaurs/log/writables/stdout";
+import { getStderrWritableStream } from "@denosaurs/log/writables/stderr";
 
 import { OmitLogLevelStream } from "@denosaurs/log/transforms/omit";
 import { PickLogLevelStream } from "@denosaurs/log/transforms/pick";

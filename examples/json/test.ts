@@ -3,7 +3,7 @@ import { assertIsLog, createJSONLineStream } from "../../utils/test.ts";
 
 assert(
   (await new Deno.Command("npm", {
-    args: ["install"],
+    args: ["install", "--force"],
     cwd: import.meta.dirname,
   }).spawn().status).success,
 );

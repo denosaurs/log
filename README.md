@@ -82,7 +82,7 @@ npm install @jsr/std__json
 ```
 
 If you would like a prettier package name I would suggest changing it in the
-`package.json` file to something like `@denosaurs/log`.
+`package.json` file to something like `@std/json`.
 
 ```diff
 {

@@ -184,3 +184,19 @@ console.info("This is going to stdout");
 console.warn("This is going to stdout");
 console.log("This is going to stdout");
 ```
+
+
+## Maintainers
+
+- Elias Sjögreen ([@eliassjogreen](https://github.com/eliassjogreen))
+
+## Other
+
+### Contribution
+
+Pull request, issues and feedback are very welcome. Code style is formatted with
+`deno fmt` and commit messages are done following Conventional Commits spec.
+
+### Licence
+
+Copyright 2024, the Denosaurs team. All rights reserved. MIT license.

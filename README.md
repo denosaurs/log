@@ -185,17 +185,92 @@ console.warn("This is going to stdout");
 console.log("This is going to stdout");
 ```
 
+## Features
+
+The module is still young, with lot's of planned features and improvements. **It
+is far from stable, so expect breaking changes.** But anyways, here are some
+features:
+
+- [ ] Add support for more runtimes and environments
+  - The goal should be to support all [WinterCG](https://wintercg.org/)
+    compatible runtimes
+  - [x] [Deno](https://deno.land/)
+  - [ ] **Untested** [Deno Deploy](https://deno.com/deploy/)
+  - [x] [Node.js](https://nodejs.org/)
+  - [x] [Bun](https://bun.sh/)
+  - [ ] **Untested** [Cloudflare Workers](https://workers.cloudflare.com/)
+  - [ ] **Untested** [Vercel Edge Runtime](https://edge-runtime.vercel.app/)
+  - [ ] **Untested** [Fastly Compute](https://www.fastly.com/products/compute/)
+  - [ ] **Untested** [LLRT](https://github.com/awslabs/llrt)
+  - [ ] **Untested** Browsers
+- [ ] Exception and rejection handling
+  - [ ] Add a `fatal` log level, which will be used for unhandled exceptions and
+        rejections. Unreachable from the normal `console` API.
+- [ ] Metrics/timings using `console.time` and `console.timeEnd`
+- [ ] Transforms
+  - [x] [Filter](./transforms/filter.ts)
+  - [x] [Omit](./transforms/omit.ts)
+  - [x] [Pick](./transforms/pick.ts)
+  - [x] JSON (Using [`JsonStringifyStream`](https://deno.land/std/json/mod.ts))
+  - [ ] Redaction
+    - [ ] `[Symbol.for("log.secret")]`
+    - [ ] Exact match
+    - [ ] Regex
+  - [ ] Request and response metadata
+    - [ ] `[Symbol.for("log.request")]` or `instanceof Request`
+    - [ ] `[Symbol.for("log.response")]` or `instanceof Response`
+  - [ ] Pretty print
+  - [ ] [Logfmt](https://brandur.org/logfmt)
+- [ ] Destinations
+  - [x] Console
+  - [x] Stdout
+  - [x] Stderr
+  - [ ] File
+    - [ ] Single file
+    - [ ] Rotating file
+  - [ ] Network
+    - [ ] Fetch
+    - [ ] WebSocket
+    - [ ] UDP
+    - [ ] TCP
+  - [ ] Integrations
+    - [ ] [OpenTelemetry](https://opentelemetry.io/docs/specs/otel/logs/)
+    - [ ] [Logstash](https://www.elastic.co/logstash/)
+- [ ] First-class support for popular web-frameworks
+  - [ ] [Hono](https://github.com/honojs/hono)
+  - [ ] [Express](https://github.com/expressjs/express)
+  - [ ] [Koa](https://github.com/koajs/koa)
+  - [ ] [Oak](https://github.com/oakserver/oak)
+  - [ ] [Fastify](https://github.com/fastify/fastify)
+
+## Goals
+
+Some goals of this module are:
+
+- **Web Standards** - It should to the greatest extent possible follow web
+  standards and try to emulate (and in the case of `console` extend) the
+  standards we already know and love.
+- **Ease of use** - It should be easy to use and understand. It should be
+  familiar, or dare I say, effortless to anyone who has used the `console`.
+- **Minimal** - It should be as small as possible, with minimal dependencies.
+  Logging doesn't have to be complicated.
+- **Performance** - It needs to be fast. It should never noticeably slow down
+  the application. Logging is a critical part of the application, but it should
+  never be the bottleneck.
+- **Quality** - It should be well tested and well documented. It should be
+  reliable and trustworthy.
+
 ## Maintainers
 
 - Elias Sjögreen ([@eliassjogreen](https://github.com/eliassjogreen))
 
-## Other
-
-### Contribution
+## Contributing
 
 Pull request, issues and feedback are very welcome. Code style is formatted with
 `deno fmt` and commit messages are done following Conventional Commits spec.
 
-### Licence
+Please use it! And let us know if you have any issues, feedback or requests.
+
+## Licence
 
 Copyright 2024, the Denosaurs team. All rights reserved. MIT license.

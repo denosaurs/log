@@ -1,5 +1,5 @@
 import { assert, assertStrictEquals } from "jsr:@std/assert";
-import { assertCollectLogLines } from "../utils/test.ts";
+import { assertCollectLogLines } from "./utils.ts";
 
 async function assertStdout(stdout: Uint8Array) {
   const logs = await assertCollectLogLines(stdout);
@@ -11,13 +11,6 @@ async function assertStderr(stderr: Uint8Array) {
   assertStrictEquals(logs.length, 1);
   assertStrictEquals(logs[0].data[0], "This is going to stderr");
 }
-
-assert(
-  (await new Deno.Command("npm", {
-    args: ["install", "--force"],
-    cwd: import.meta.dirname,
-  }).spawn().status).success,
-);
 
 Deno.test("deno", async () => {
   const { success, stdout, stderr } = await new Deno.Command("deno", {

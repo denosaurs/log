@@ -1,12 +1,5 @@
 import { assert } from "jsr:@std/assert";
-import { assertIsLog, createJSONLineStream } from "../utils/test.ts";
-
-assert(
-  (await new Deno.Command("npm", {
-    args: ["install", "--force"],
-    cwd: import.meta.dirname,
-  }).spawn().status).success,
-);
+import { assertIsLog, createJSONLineStream } from "./utils.ts";
 
 Deno.test("deno", async () => {
   const { success, stdout } = await new Deno.Command("deno", {

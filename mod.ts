@@ -1,5 +1,3 @@
-// deno-lint-ignore-file no-explicit-any
-
 const console = globalThis.console;
 
 type RecursivePartial<T> = {
@@ -21,11 +19,16 @@ export const LOG_LEVELS: { [level in LogLevel]: number } = {
   "error": 5,
 };
 
+/**
+ * A log object that represents a single log entry.
+ */
 export interface Log {
   /** A millisecond resolution unix timestamp of when the log was made */
   timestamp: number;
   level: LogLevel;
+  // deno-lint-ignore no-explicit-any
   groups: any[];
+  // deno-lint-ignore no-explicit-any
   data: any[];
 }
 
@@ -149,6 +152,7 @@ export class ConsoleReadableStream extends ReadableStream<Log> {
       defaultConsoleReadableStreamOptions.internals.clone;
 
     let controller: ReadableStreamDefaultController<Log>;
+    // deno-lint-ignore no-explicit-any
     const groups: any[] = [];
 
     super({
@@ -159,6 +163,7 @@ export class ConsoleReadableStream extends ReadableStream<Log> {
 
     this.#options = options as ConsoleReadableStreamOptions;
 
+    // deno-lint-ignore no-explicit-any
     const wrapper = (level: LogLevel) => (...data: any[]) => {
       controller.enqueue({
         timestamp: this.#options.internals.now(),
@@ -207,6 +212,7 @@ export class ConsoleReadableStream extends ReadableStream<Log> {
       },
 
       group: {
+        // deno-lint-ignore no-explicit-any
         value: (...data: any) => {
           groups.push(data);
         },
@@ -215,6 +221,7 @@ export class ConsoleReadableStream extends ReadableStream<Log> {
         configurable: true,
       },
       groupCollapsed: {
+        // deno-lint-ignore no-explicit-any
         value: (...data: any) => {
           groups.push(data);
         },
@@ -233,6 +240,7 @@ export class ConsoleReadableStream extends ReadableStream<Log> {
     });
   }
 
+  // deno-lint-ignore no-explicit-any
   cancel(reason?: any): Promise<void> {
     globalThis.console = console;
     return super.cancel(reason);

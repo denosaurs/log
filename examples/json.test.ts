@@ -1,5 +1,5 @@
 import { assert } from "jsr:@std/assert";
-import { assertIsLog, createJSONLineStream } from "../../utils/test.ts";
+import { assertIsLog, createJSONLineStream } from "../utils/test.ts";
 
 assert(
   (await new Deno.Command("npm", {
@@ -10,7 +10,7 @@ assert(
 
 Deno.test("deno", async () => {
   const { success, stdout } = await new Deno.Command("deno", {
-    args: ["run", "--quiet", "--no-npm", "main.js"],
+    args: ["run", "--quiet", "--no-npm", "json.js"],
     cwd: import.meta.dirname,
   }).output();
   assert(success);
@@ -21,7 +21,7 @@ Deno.test("deno", async () => {
 
 Deno.test("bun", async () => {
   const { success, stdout } = await new Deno.Command("bun", {
-    args: ["main.js"],
+    args: ["json.js"],
     cwd: import.meta.dirname,
   }).output();
   assert(success);
@@ -32,7 +32,7 @@ Deno.test("bun", async () => {
 
 Deno.test("node", async () => {
   const { success, stdout } = await new Deno.Command("node", {
-    args: ["main.js"],
+    args: ["json.js"],
     cwd: import.meta.dirname,
   }).output();
   assert(success);

@@ -1,5 +1,5 @@
 import { assert, assertStrictEquals } from "jsr:@std/assert";
-import { assertCollectLogLines } from "../../utils/test.ts";
+import { assertCollectLogLines } from "../utils/test.ts";
 
 async function assertStdout(stdout: Uint8Array) {
   const logs = await assertCollectLogLines(stdout);
@@ -21,7 +21,7 @@ assert(
 
 Deno.test("deno", async () => {
   const { success, stdout, stderr } = await new Deno.Command("deno", {
-    args: ["run", "--quiet", "--no-npm", "main.js"],
+    args: ["run", "--quiet", "--no-npm", "tee.js"],
     cwd: import.meta.dirname,
   }).output();
   assert(success);
@@ -31,7 +31,7 @@ Deno.test("deno", async () => {
 
 Deno.test("bun", async () => {
   const { success, stdout, stderr } = await new Deno.Command("bun", {
-    args: ["main.js"],
+    args: ["tee.js"],
     cwd: import.meta.dirname,
   }).output();
   assert(success);
@@ -41,7 +41,7 @@ Deno.test("bun", async () => {
 
 Deno.test("node", async () => {
   const { success, stdout, stderr } = await new Deno.Command("node", {
-    args: ["main.js"],
+    args: ["tee.js"],
     cwd: import.meta.dirname,
   }).output();
   assert(success);

@@ -1,7 +1,0 @@
-{
-  "type": "module",
-  "dependencies": {
-    "@std/json": "npm:@jsr/std__json",
-    "@denosaurs/log": "npm:@jsr/denosaurs__log"
-  }
-}

@@ -1,0 +1,19 @@
+{
+  "lock": false,
+  "imports": {
+    "@denosaurs/log": "../mod.ts",
+    "@denosaurs/log/transforms/filter": "../transforms/filter.ts",
+    "@denosaurs/log/transforms/omit": "../transforms/omit.ts",
+    "@denosaurs/log/transforms/pick": "../transforms/pick.ts",
+    "@denosaurs/log/transforms/text_encoder_stream": "../transforms/text_encoder_stream.ts",
+    "@denosaurs/log/writables/console": "../writables/console.ts",
+    "@denosaurs/log/writables/stderr": "../writables/stderr.ts",
+    "@denosaurs/log/writables/stdout": "../writables/stdout.ts",
+    "@std/json": "jsr:@std/json",
+    "bole": "npm:bole",
+    "bunyan": "npm:bunyan",
+    "pino": "npm:pino",
+    "winston": "npm:winston",
+    "mitata": "npm:mitata"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "module",
+  "dependencies": {
+    "@denosaurs/log": "npm:@jsr/denosaurs__log",
+    "@std/json": "npm:@jsr/std__json",
+    "bole": "^5.0.11",
+    "bunyan": "^1.8.15",
+    "pino": "^8.19.0",
+    "winston": "^3.11.0",
+    "mitata": "^0.1.11"
+  }
+}

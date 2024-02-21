@@ -10,5 +10,8 @@
     "@denosaurs/log/writables/stderr": "../writables/stderr.ts",
     "@denosaurs/log/writables/stdout": "../writables/stdout.ts",
     "@std/json": "jsr:@std/json"
+  },
+  "tasks": {
+    "prepare": "npm install --force && deno cache -r json.js && deno cache -r tee.js"
   }
 }

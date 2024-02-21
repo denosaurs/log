@@ -11,5 +11,11 @@
     "./writables/stderr": "./writables/stderr.ts",
     "./writables/stdout": "./writables/stdout.ts"
   },
-  "lock": false
+  "lock": false,
+  "tasks": {
+    "prepare": "deno task examples:prepare && deno task bench:prepare",
+    "examples:prepare": "cd examples && deno task prepare",
+    "bench:prepare": "cd benchmarks && deno task prepare",
+    "bench": "cd benchmarks && deno task bench"
+  }
 }

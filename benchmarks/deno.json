@@ -15,5 +15,17 @@
     "pino": "npm:pino",
     "winston": "npm:winston",
     "mitata": "npm:mitata"
+  },
+  "tasks": {
+    "prepare": "npm install --force && deno cache -r basic.js && deno cache -r object.js",
+    "bench": "deno task bench:basic && deno task bench:object",
+    "bench:basic": "deno task bench:basic:deno && deno task bench:basic:node && deno task bench:basic:bun",
+    "bench:basic:deno": "deno run -A basic.js",
+    "bench:basic:node": "node basic.js",
+    "bench:basic:bun": "bun basic.js",
+    "bench:object": "deno task bench:object:deno && deno task bench:object:node && deno task bench:object:bun",
+    "bench:object:deno": "deno run -A object.js",
+    "bench:object:node": "node object.js",
+    "bench:object:bun": "bun object.js"
   }
 }

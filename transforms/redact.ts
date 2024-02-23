@@ -201,9 +201,34 @@ export function redact<T, R>(
   return innerRedact(data, prepareOptions(options));
 }
 
+/**
+ * A transform stream that redacts the data of the logs based on the provided options.
+ * 
+ * By default it replaces the redacted data with the {@link redacted} symbol
+ * but this can be configured using the {@link RedactOptions.replace} option.
+ * 
+ * Any log or object containing the default {@link secret} marker symbol will
+ * be automatically redacted. This can be configured using the
+ * {@link RedactOptions.markers} option.
+ * 
+ * @example
+ * new ConsoleReadableStream()
+ *   // Redact sensitive data
+ *   .pipeThrough(new RedactStream())
+ *   // Stringify the logs to JSON
+ *   .pipeThrough(new JsonStringifyStream())
+ *   // Encode the output to an UTF-8 byte stream
+ *   .pipeThrough(new TextEncoderStream())
+ *   // Pipe the output to stderr
+ *   .pipeTo(getStderrWritableStream());
+ *
+ * const thisIsSecret = { password: "lorem ipsum", [secret]: null };
+ * console.log(thisIsSecret);
+ * // Output: { password: Symbol(redacted) }
+ */
+// deno-fmt-ignore
 // deno-lint-ignore no-explicit-any
-export class RedactStream<T = typeof redacted>
-  extends TransformStream<Log, Log & { data: any[] | T }> {
+export class RedactStream<T = typeof redacted> extends TransformStream<Log, Log & { data: any[] | T }> {
   constructor(options?: RedactOptions<T>) {
     options ??= {};
     options.replace ??= redacted as T;
@@ -211,9 +236,7 @@ export class RedactStream<T = typeof redacted>
       transform(log, controller) {
         // deno-lint-ignore no-explicit-any
         (log.data as any[] | T) = redact(log.data, options);
-        if (log.data === options?.replace) {
-          controller.enqueue(log);
-        }
+        controller.enqueue(log);
       },
     });
   }

@@ -2,9 +2,11 @@
   "lock": false,
   "imports": {
     "@denosaurs/log": "../mod.ts",
+    "@denosaurs/log/transforms/fast_redact": "../transforms/fast_redact.ts",
     "@denosaurs/log/transforms/filter": "../transforms/filter.ts",
     "@denosaurs/log/transforms/omit": "../transforms/omit.ts",
     "@denosaurs/log/transforms/pick": "../transforms/pick.ts",
+    "@denosaurs/log/transforms/redact": "../transforms/redact.ts",
     "@denosaurs/log/transforms/text_encoder_stream": "../transforms/text_encoder_stream.ts",
     "@denosaurs/log/writables/console": "../writables/console.ts",
     "@denosaurs/log/writables/stderr": "../writables/stderr.ts",

@@ -6,16 +6,10 @@ import { originalConsole, Log } from "../mod.ts";
  */
 export class ConsoleWritableStream extends WritableStream<Log> {
   constructor() {
-    let groups = 0;
     super({
       write(log) {
-        if (log.groups.length > groups) {
-          groups = log.groups.length;
-          originalConsole.group(...log.groups.at(-1));
-        }
-
-        if (groups < log.groups.length) {
-          originalConsole.groupEnd();
+        for (const group of log.groups) {
+          originalConsole.group(...group);
         }
 
         switch (log.level) {
@@ -39,6 +33,10 @@ export class ConsoleWritableStream extends WritableStream<Log> {
             originalConsole.error(...log.data);
             break;
           }
+        }
+
+        for (let i = 0; i < log.groups.length; i++) {
+          originalConsole.groupEnd();
         }
       },
     });

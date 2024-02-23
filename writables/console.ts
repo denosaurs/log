@@ -1,4 +1,4 @@
-import { Log } from "../mod.ts";
+import { originalConsole, Log } from "../mod.ts";
 
 /**
  * A writable stream that logs {@link Log logs} to the {@link console} using
@@ -11,32 +11,32 @@ export class ConsoleWritableStream extends WritableStream<Log> {
       write(log) {
         if (log.groups.length > groups) {
           groups = log.groups.length;
-          console.group(log.groups.at(-1));
+          originalConsole.group(...log.groups.at(-1));
         }
 
         if (groups < log.groups.length) {
-          console.groupEnd();
+          originalConsole.groupEnd();
         }
 
         switch (log.level) {
           case "trace": {
-            console.trace(log.data);
+            originalConsole.trace(...log.data);
             break;
           }
           case "debug": {
-            console.debug(log.data);
+            originalConsole.debug(...log.data);
             break;
           }
           case "info": {
-            console.info(log.data);
+            originalConsole.info(...log.data);
             break;
           }
           case "warn": {
-            console.warn(log.data);
+            originalConsole.warn(...log.data);
             break;
           }
           case "error": {
-            console.error(log.data);
+            originalConsole.error(...log.data);
             break;
           }
         }

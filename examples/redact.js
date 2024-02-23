@@ -11,7 +11,7 @@ import { JsonStringifyStream } from "@std/json";
 // Capture logs from the console
 const stream = new ConsoleReadableStream();
 stream
-  .pipeThrough(new RedactStream())
+  .pipeThrough(new RedactStream({ properties: ["password"] }))
   // Stringify the logs to JSON
   .pipeThrough(new JsonStringifyStream())
   // Encode the output to an UTF-8 byte stream
@@ -20,5 +20,5 @@ stream
   .pipeTo(getStdoutWritableStream());
 
 // Log a secret
-const thisIsSecret = { password: "lorem ipsum", [secret]: null };
+const thisIsSecret = { password: "lorem ipsum" };
 console.log(thisIsSecret);

@@ -55,13 +55,7 @@ export const defaultConsoleReadableStreamOptions: ConsoleReadableStreamOptions =
     internals: {
       now: Date.now,
       clone: <T>(data: T) => {
-        if (
-          typeof data === "string" ||
-          typeof data === "number" ||
-          typeof data === "boolean" ||
-          data === null ||
-          data === undefined
-        ) {
+        if (typeof data !== "object" || data === null) {
           return data;
         }
 
@@ -87,13 +81,7 @@ export const fastConsoleReadableStreamOptions: ConsoleReadableStreamOptions = {
   internals: {
     now: Date.now,
     clone: <T>(data: T) => {
-      if (
-        typeof data === "string" ||
-        typeof data === "number" ||
-        typeof data === "boolean" ||
-        data === null ||
-        data === undefined
-      ) {
+      if (typeof data !== "object" || data === null) {
         return data;
       }
 
@@ -115,13 +103,7 @@ export const hrtimeConsoleReadableStreamOptions: ConsoleReadableStreamOptions =
     internals: {
       now: () => performance.timeOrigin + performance.now(),
       clone: <T>(data: T) => {
-        if (
-          typeof data === "string" ||
-          typeof data === "number" ||
-          typeof data === "boolean" ||
-          data === null ||
-          data === undefined
-        ) {
+        if (typeof data !== "object" || data === null) {
           return data;
         }
 

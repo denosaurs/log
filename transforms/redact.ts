@@ -203,14 +203,14 @@ export function redact<T, R>(
 
 /**
  * A transform stream that redacts the data of the logs based on the provided options.
- * 
+ *
  * By default it replaces the redacted data with the {@link redacted} symbol
  * but this can be configured using the {@link RedactOptions.replace} option.
- * 
+ *
  * Any log or object containing the default {@link secret} marker symbol will
  * be automatically redacted. This can be configured using the
  * {@link RedactOptions.markers} option.
- * 
+ *
  * @example
  * new ConsoleReadableStream()
  *   // Redact sensitive data

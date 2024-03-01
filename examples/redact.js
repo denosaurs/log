@@ -3,7 +3,7 @@ import "@denosaurs/log/transforms/text_encoder_stream";
 
 import { ConsoleReadableStream } from "@denosaurs/log";
 
-import { RedactStream, secret } from "@denosaurs/log/transforms/redact";
+import { RedactStream } from "@denosaurs/log/transforms/redact";
 import { getStdoutWritableStream } from "@denosaurs/log/writables/stdout";
 
 import { JsonStringifyStream } from "@std/json";

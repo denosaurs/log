@@ -1,0 +1,65 @@
+name: Checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+
+      - name: Setup latest deno version
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Run deno fmt
+        run: deno fmt --check
+
+      - name: Run deno lint
+        run: deno lint
+
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+
+      - name: Setup latest deno version
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Run deno check mod.ts
+        run: deno check mod.ts
+
+
+  test:
+    name: test ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        # TODO: Bun doesn't support windows yet, when it does add windows-latest here
+        os: [ubuntu-latest, macos-latest,]
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+
+      - name: Setup latest deno version
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+
+      - name: Prepare dependencies
+        run: deno task examples:prepare
+
+      - name: Run deno test
+        run: deno task test

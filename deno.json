@@ -1,11 +1,13 @@
 {
   "name": "@denosaurs/log",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "exports": {
     ".": "./mod.ts",
     "./transforms/filter": "./transforms/filter.ts",
     "./transforms/omit": "./transforms/omit.ts",
     "./transforms/pick": "./transforms/pick.ts",
+    "./transforms/fast_redact": "./transforms/fast_redact.ts",
+    "./transforms/redact": "./transforms/redact.ts",
     "./transforms/text_encoder_stream": "./transforms/text_encoder_stream.ts",
     "./writables/console": "./writables/console.ts",
     "./writables/stderr": "./writables/stderr.ts",

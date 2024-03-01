@@ -212,10 +212,14 @@ features:
   - [x] [Omit](./transforms/omit.ts)
   - [x] [Pick](./transforms/pick.ts)
   - [x] JSON (Using [`JsonStringifyStream`](https://deno.land/std/json/mod.ts))
-  - [ ] Redaction
-    - [ ] `[Symbol.for("log.secret")]`
-    - [ ] Exact match
-    - [ ] Regex
+  - [x] Redaction
+    - [x] `[Symbol.for("log.secret")]` (This only works when not using
+          [`structuredClone`](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#javascript_types)
+          because `symbol`s are not cloneable. A future fix for this might be to
+          write our own `structuredClone` function which keeps symbols.)
+    - [x] Exact match
+    - [x] Regex
+    - [x] [fast-redact](https://github.com/davidmarkclements/fast-redact)
   - [ ] Request and response metadata
     - [ ] `[Symbol.for("log.request")]` or `instanceof Request`
     - [ ] `[Symbol.for("log.response")]` or `instanceof Response`

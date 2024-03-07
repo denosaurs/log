@@ -1,3 +1,5 @@
+import { transferSymbols } from "./utils/transfer_symbols.ts";
+
 /**
  * Create a function that restores the given console to its original state.
  */
@@ -241,13 +243,7 @@ export const defaultConsoleReadableStreamOptions: ConsoleReadableStreamOptions =
     console: globalThis.console,
     internals: {
       now: Date.now,
-      clone: <T>(data: T) => {
-        if (typeof data !== "object" || data === null) {
-          return data;
-        }
-
-        return structuredClone(data);
-      },
+      clone: <T>(data: T) => transferSymbols(data, structuredClone(data)),
     },
   };
 
@@ -268,13 +264,8 @@ export const fastConsoleReadableStreamOptions: ConsoleReadableStreamOptions = {
   console: globalThis.console,
   internals: {
     now: Date.now,
-    clone: <T>(data: T) => {
-      if (typeof data !== "object" || data === null) {
-        return data;
-      }
-
-      return JSON.parse(JSON.stringify(data));
-    },
+    clone: <T>(data: T) =>
+      transferSymbols(data, JSON.parse(JSON.stringify(data))),
   },
 };
 
@@ -291,13 +282,7 @@ export const hrtimeConsoleReadableStreamOptions: ConsoleReadableStreamOptions =
     console: globalThis.console,
     internals: {
       now: () => performance.timeOrigin + performance.now(),
-      clone: <T>(data: T) => {
-        if (typeof data !== "object" || data === null) {
-          return data;
-        }
-
-        return structuredClone(data);
-      },
+      clone: <T>(data: T) => transferSymbols(data, structuredClone(data)),
     },
   };
 

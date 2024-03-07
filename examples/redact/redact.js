@@ -3,22 +3,17 @@ import "@denosaurs/log/transforms/text_encoder_stream";
 
 import { ConsoleReadableStream } from "@denosaurs/log";
 
-import { RedactStream } from "@denosaurs/log/transforms/redact";
-import { getStdoutWritableStream } from "@denosaurs/log/writables/stdout";
-
-import { JsonStringifyStream } from "@std/json";
+import { RedactStream, secret } from "@denosaurs/log/transforms/redact";
+import { ConsoleWritableStream } from "@denosaurs/log/writables/console";
 
 // Capture logs from the console
 const stream = new ConsoleReadableStream();
 stream
   .pipeThrough(new RedactStream({ properties: ["password"] }))
-  // Stringify the logs to JSON
-  .pipeThrough(new JsonStringifyStream())
-  // Encode the output to an UTF-8 byte stream
-  .pipeThrough(new TextEncoderStream())
-  // Pipe the output to stdout
-  .pipeTo(getStdoutWritableStream());
+  // Pipe the redacted logs to the console
+  .pipeTo(new ConsoleWritableStream());
 
 // Log a secret
-const thisIsSecret = { password: "lorem ipsum" };
-console.log(thisIsSecret);
+console.log({ password: "lorem ipsum" });
+console.log({ [secret]: 123 });
+console.log([{ [secret]: 123 }]);

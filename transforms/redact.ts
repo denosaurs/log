@@ -1,5 +1,47 @@
+/**
+ * # RedactStream
+ *
+ * A transform stream that redacts the data of the logs based on the provided options.
+ *
+ * By default it replaces the redacted data with the {@link redacted} symbol
+ * but this can be configured using the {@link RedactOptions.replace} option.
+ *
+ * Any log or object containing the default {@link secret} marker symbol will
+ * be automatically redacted. This can be configured using the
+ * {@link RedactOptions.markers} option.
+ *
+ * @example
+ * ```ts
+ * import { ConsoleReadableStream } from "@denosaurs/log";
+ * import { RedactStream, secret } from "@denosaurs/log/transforms/redact";
+ * import { ConsoleWritableStream } from "@denosaurs/log/writables/console";
+ *
+ * // Capture logs from the console
+ * const stream = new ConsoleReadableStream();
+ * stream
+ *   .pipeThrough(new RedactStream({ properties: ["password"] }))
+ *   // Pipe the redacted logs to the console
+ *   .pipeTo(new ConsoleWritableStream());
+ *
+ * // Log some secrets
+ * console.log({ password: "lorem ipsum" });
+ * console.log({ [secret]: 123 });
+ * console.log([{ [secret]: 123 }]);
+ *
+ * // Output:
+ * // { password: Symbol(redacted) }
+ * // Symbol(redacted)
+ * // [ Symbol(redacted) ]
+ * ```
+ *
+ * @module
+ */
+
 import { Log } from "../mod.ts";
 
+/**
+ * Options for the {@link redact} function and the {@link RedactStream}.
+ */
 export interface RedactOptions<T = typeof redacted> {
   /**
    * A list of marker symbols which when encountered will replace the whole
@@ -212,19 +254,28 @@ export function redact<T, R>(
  * {@link RedactOptions.markers} option.
  *
  * @example
- * new ConsoleReadableStream()
- *   // Redact sensitive data
- *   .pipeThrough(new RedactStream())
- *   // Stringify the logs to JSON
- *   .pipeThrough(new JsonStringifyStream())
- *   // Encode the output to an UTF-8 byte stream
- *   .pipeThrough(new TextEncoderStream())
- *   // Pipe the output to stderr
- *   .pipeTo(getStderrWritableStream());
+ * ```ts
+ * import { ConsoleReadableStream } from "@denosaurs/log";
+ * import { RedactStream, secret } from "@denosaurs/log/transforms/redact";
+ * import { ConsoleWritableStream } from "@denosaurs/log/writables/console";
  *
- * const thisIsSecret = { password: "lorem ipsum", [secret]: null };
- * console.log(thisIsSecret);
- * // Output: { password: Symbol(redacted) }
+ * // Capture logs from the console
+ * const stream = new ConsoleReadableStream();
+ * stream
+ *   .pipeThrough(new RedactStream({ properties: ["password"] }))
+ *   // Pipe the redacted logs to the console
+ *   .pipeTo(new ConsoleWritableStream());
+ *
+ * // Log some secrets
+ * console.log({ password: "lorem ipsum" });
+ * console.log({ [secret]: 123 });
+ * console.log([{ [secret]: 123 }]);
+ *
+ * // Output:
+ * // { password: Symbol(redacted) }
+ * // Symbol(redacted)
+ * // [ Symbol(redacted) ]
+ * ```
  */
 // deno-fmt-ignore
 // deno-lint-ignore no-explicit-any

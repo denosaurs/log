@@ -1,6 +1,6 @@
 {
   "name": "@denosaurs/log",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "exports": {
     ".": "./mod.ts",
     "./transforms/filter": "./transforms/filter.ts",

@@ -1,5 +1,5 @@
 import { assert } from "jsr:@std/assert";
-import { assertIsLog, createJSONLineStream } from "./utils.ts";
+import { assertIsLog, createJSONLineStream } from "../utils.ts";
 
 Deno.test("logs to stdout in json example", async ({ step }) => {
   await step("deno", async () => {

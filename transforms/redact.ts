@@ -33,7 +33,7 @@
  * // Symbol(redacted)
  * // [ Symbol(redacted) ]
  * ```
- * 
+ *
  * @module
  */
 

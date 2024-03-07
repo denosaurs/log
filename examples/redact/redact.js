@@ -13,7 +13,12 @@ stream
   // Pipe the redacted logs to the console
   .pipeTo(new ConsoleWritableStream());
 
-// Log a secret
+// Log some secrets
 console.log({ password: "lorem ipsum" });
 console.log({ [secret]: 123 });
 console.log([{ [secret]: 123 }]);
+
+// Output:
+// { password: Symbol(redacted) }
+// Symbol(redacted)
+// [ Symbol(redacted) ]

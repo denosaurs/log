@@ -1,35 +1,152 @@
 /**
- * A copy of the original console object.
+ * Create a function that restores the given console to its original state.
  */
-export const originalConsole: Console = {
-  assert: console?.assert.bind(console),
-  clear: console?.clear.bind(console),
-  count: console?.count.bind(console),
-  countReset: console?.countReset.bind(console),
-  debug: console?.debug.bind(console),
-  dir: console?.dir.bind(console),
-  dirxml: console?.dirxml.bind(console),
-  error: console?.error.bind(console),
-  group: console?.group.bind(console),
-  groupCollapsed: console?.groupCollapsed.bind(console),
-  groupEnd: console?.groupEnd.bind(console),
-  info: console?.info.bind(console),
-  log: console?.log.bind(console),
-  table: console?.table.bind(console),
-  time: console?.time.bind(console),
-  timeEnd: console?.timeEnd.bind(console),
-  timeLog: console?.timeLog.bind(console),
-  trace: console?.trace.bind(console),
-  warn: console?.warn.bind(console),
-  timeStamp: console?.timeStamp.bind(console),
-  profile: console?.profile.bind(console),
-  profileEnd: console?.profileEnd.bind(console),
-};
+function createRestoreConsole(original: Console) {
+  const methods: PropertyDescriptorMap = {
+    assert: {
+      value: original?.assert.bind(original),
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    },
+    clear: {
+      value: original?.clear.bind(original),
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    },
+    count: {
+      value: original?.count.bind(original),
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    },
+    countReset: {
+      value: original?.countReset.bind(original),
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    },
+    debug: {
+      value: original?.debug.bind(original),
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    },
+    dir: {
+      value: original?.dir.bind(original),
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    },
+    dirxml: {
+      value: original?.dirxml.bind(original),
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    },
+    error: {
+      value: original?.error.bind(original),
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    },
+    group: {
+      value: original?.group.bind(original),
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    },
+    groupCollapsed: {
+      value: original?.groupCollapsed.bind(original),
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    },
+    groupEnd: {
+      value: original?.groupEnd.bind(original),
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    },
+    info: {
+      value: original?.info.bind(original),
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    },
+    log: {
+      value: original?.log.bind(original),
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    },
+    table: {
+      value: original?.table.bind(original),
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    },
+    time: {
+      value: original?.time.bind(original),
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    },
+    timeEnd: {
+      value: original?.timeEnd.bind(original),
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    },
+    timeLog: {
+      value: original?.timeLog.bind(original),
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    },
+    trace: {
+      value: original?.trace.bind(original),
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    },
+    warn: {
+      value: original?.warn.bind(original),
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    },
+    timeStamp: {
+      value: original?.timeStamp.bind(original),
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    },
+    profile: {
+      value: original?.profile.bind(original),
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    },
+    profileEnd: {
+      value: original?.profileEnd.bind(original),
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    },
+  };
+
+  return (console: Console) => Object.defineProperties(console, methods);
+}
 
 type RecursivePartial<T> = {
   [P in keyof T]?: RecursivePartial<T[P]>;
 };
 
+/**
+ * All of the log levels that are supported by the console.
+ */
 export type LogLevel =
   | "trace"
   | "debug"
@@ -37,6 +154,11 @@ export type LogLevel =
   | "warn"
   | "error";
 
+/**
+ * A numeric representation of the log levels to be able to compare log levels.
+ * The lower the number, the more verbose the log level. The higher the number,
+ * the more severe the log level.
+ */
 export const LOG_LEVELS: { [level in LogLevel]: number } = {
   "trace": 1,
   "debug": 2,
@@ -51,14 +173,52 @@ export const LOG_LEVELS: { [level in LogLevel]: number } = {
 export interface Log {
   /** A millisecond resolution unix timestamp of when the log was made */
   timestamp: number;
+  /** The log level of the log. */
   level: LogLevel;
+  /**
+   * An array of groups that were active when the log was made. The groups are
+   * a clone of the array of all the arguments that were passed to the console
+   * `group` and `groupCollapsed` methods as to never modify any potential
+   * references.
+   *
+   * @example
+   * ```ts
+   * console.group("group1", "group2");
+   * console.group("group3");
+   * console.log("Hello, world!");
+   * // Would result in the following groups:
+   * // [["group1", "group2"], ["group3"]]
+   * ```
+   */
   // deno-lint-ignore no-explicit-any
-  groups: any[];
+  groups: any[][];
+  /**
+   * The data that was logged. It is a clone of the array of all the arguments
+   * that were passed to the console method which made the log as to never
+   * modify any potential references.
+   */
   // deno-lint-ignore no-explicit-any
   data: any[];
 }
 
+/**
+ * Options for the {@link ConsoleReadableStream}.
+ */
 export interface ConsoleReadableStreamOptions {
+  /**
+   * The console object to capture logs from. The object will be modified to
+   * capture all logs and will be restored to its original state when the
+   * stream is closed.
+   *
+   * @default globalThis.console
+   */
+  console: Console;
+  /**
+   * Internal methods and configuration. Depending on the options, the
+   * performance, supported features and timestamp accuracy may vary.
+   *
+   * @default defaultConsoleReadableStreamOptions
+   */
   internals: {
     /**
      * @returns A millisecond resolution unix timestamp of when the log was made
@@ -78,6 +238,7 @@ export interface ConsoleReadableStreamOptions {
  */
 export const defaultConsoleReadableStreamOptions: ConsoleReadableStreamOptions =
   {
+    console: globalThis.console,
     internals: {
       now: Date.now,
       clone: <T>(data: T) => {
@@ -104,6 +265,7 @@ export const defaultConsoleReadableStreamOptions: ConsoleReadableStreamOptions =
  * {@link defaultConsoleReadableStreamOptions} instead.
  */
 export const fastConsoleReadableStreamOptions: ConsoleReadableStreamOptions = {
+  console: globalThis.console,
   internals: {
     now: Date.now,
     clone: <T>(data: T) => {
@@ -126,6 +288,7 @@ export const fastConsoleReadableStreamOptions: ConsoleReadableStreamOptions = {
  */
 export const hrtimeConsoleReadableStreamOptions: ConsoleReadableStreamOptions =
   {
+    console: globalThis.console,
     internals: {
       now: () => performance.timeOrigin + performance.now(),
       clone: <T>(data: T) => {
@@ -148,12 +311,15 @@ export const hrtimeConsoleReadableStreamOptions: ConsoleReadableStreamOptions =
  */
 export class ConsoleReadableStream extends ReadableStream<Log> {
   #options: ConsoleReadableStreamOptions;
+  #restore: (console: Console) => Console;
+  #close: () => void;
 
   constructor(
     options: RecursivePartial<ConsoleReadableStreamOptions> =
       defaultConsoleReadableStreamOptions,
   ) {
     options ??= defaultConsoleReadableStreamOptions;
+    options.console ??= defaultConsoleReadableStreamOptions.console;
     options.internals ??= defaultConsoleReadableStreamOptions.internals;
     options.internals.now ??= defaultConsoleReadableStreamOptions.internals.now;
     options.internals.clone ??=
@@ -170,6 +336,8 @@ export class ConsoleReadableStream extends ReadableStream<Log> {
     });
 
     this.#options = options as ConsoleReadableStreamOptions;
+    this.#restore = createRestoreConsole(this.#options.console);
+    this.#close = () => controller.close();
 
     // deno-lint-ignore no-explicit-any
     const wrapper = (level: LogLevel) => (...data: any[]) => {
@@ -181,7 +349,7 @@ export class ConsoleReadableStream extends ReadableStream<Log> {
       });
     };
 
-    Object.defineProperties(globalThis.console, {
+    Object.defineProperties(options.console, {
       trace: {
         value: wrapper("trace"),
         writable: true,
@@ -248,9 +416,17 @@ export class ConsoleReadableStream extends ReadableStream<Log> {
     });
   }
 
+  /**
+   * Closes the stream and restores the original console object.
+   */
+  close() {
+    this.#close();
+    this.#options.console = this.#restore(this.#options.console);
+  }
+
   // deno-lint-ignore no-explicit-any
   cancel(reason?: any): Promise<void> {
-    globalThis.console = originalConsole;
+    this.close();
     return super.cancel(reason);
   }
 }

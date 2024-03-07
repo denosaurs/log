@@ -95,7 +95,7 @@ If you would like a prettier package name I would suggest changing it in the
 
 </details>
 
-### [JSON](./examples/json.js)
+### [JSON](./examples/json/json.js)
 
 The following example demonstrates how to capture and log messages as JSON to
 stdout.
@@ -128,7 +128,7 @@ console.groupEnd();
 console.info("Info message");
 ```
 
-### [Teeing](./examples/tee.js)
+### [Teeing](./examples/tee/tee.js)
 
 Sometimes you may want to log messages to multiple destinations. This can be
 done using

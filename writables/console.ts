@@ -1,4 +1,5 @@
-import { Log, originalConsole } from "../mod.ts";
+import { Log } from "../mod.ts";
+import { originalConsole } from "../utils/original_console.ts";
 
 /**
  * A writable stream that logs {@link Log logs} to the {@link console} using

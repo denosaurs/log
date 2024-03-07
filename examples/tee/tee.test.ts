@@ -1,5 +1,5 @@
 import { assert, assertStrictEquals } from "jsr:@std/assert";
-import { assertCollectLogLines } from "./utils.ts";
+import { assertCollectLogLines } from "../utils.ts";
 
 async function assertStdout(stdout: Uint8Array) {
   const logs = await assertCollectLogLines(stdout);

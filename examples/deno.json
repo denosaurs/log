@@ -14,6 +14,6 @@
     "@std/json": "jsr:@std/json"
   },
   "tasks": {
-    "prepare": "npm install --force && deno cache -r json.js && deno cache -r tee.js"
+    "prepare": "npm install --force && deno cache -r **/*.js && deno cache -r **/*.ts"
   }
 }

@@ -1,7 +1,7 @@
 import type { Log } from "../mod.ts";
 import type { RedactOptions } from "npm:@types/fast-redact@3";
 
-// @deno-types="npm:@types/fast-redact"
+// @deno-types="npm:@types/fast-redact@3"
 import redact from "npm:fast-redact@3";
 
 export type FastRedactOptions = RedactOptions;

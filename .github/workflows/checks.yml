@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  lint:
+  fmt:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
@@ -20,6 +20,17 @@ jobs:
 
       - name: Run deno fmt
         run: deno fmt --check
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+
+      - name: Setup latest deno version
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
 
       - name: Run deno lint
         run: deno lint

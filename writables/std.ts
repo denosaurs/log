@@ -43,7 +43,11 @@ export class StdWritableStream extends WritableStream<Uint8Array> {
     let sink: UnderlyingSink<Uint8Array>;
     switch (environment) {
       case "deno":
-        sink = Deno[stream].writable;
+        sink = {
+          write: async (chunk) => {
+            await globalThis.Deno[stream].write(chunk);
+          },
+        }
         break;
       case "bun":
         // Once https://github.com/oven-sh/bun/issues/3927 is completed we can use the node code for bun.
@@ -106,6 +110,6 @@ export class StdoutWritableStream extends StdWritableStream {
  */
 export class StderrWritableStream extends StdWritableStream {
   constructor() {
-    super("stdout");
+    super("stderr");
   }
 }

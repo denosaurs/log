@@ -23,6 +23,7 @@
  * @module
  */
 
+import { originalConsole } from "../utils/original_console.ts";
 import { environment, isNode } from "../utils/runtime.ts";
 
 let nodeWritableToWeb: (
@@ -61,7 +62,7 @@ export class StdWritableStream extends WritableStream<Uint8Array> {
       case "unknown": {
         const decoder = new TextDecoder();
         let buffer = "";
-        const write = stream === "stdout" ? console.log : console.error;
+        const write = stream === "stdout" ? originalConsole.log : originalConsole.error;
 
         sink = {
           write: (chunk) => {

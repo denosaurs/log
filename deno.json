@@ -1,6 +1,6 @@
 {
   "name": "@denosaurs/log",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "exports": {
     ".": "./mod.ts",
     "./transforms/filter": "./transforms/filter.ts",
@@ -10,8 +10,7 @@
     "./transforms/redact": "./transforms/redact.ts",
     "./transforms/text_encoder_stream": "./transforms/text_encoder_stream.ts",
     "./writables/console": "./writables/console.ts",
-    "./writables/stderr": "./writables/stderr.ts",
-    "./writables/stdout": "./writables/stdout.ts"
+    "./writables/std": "./writables/std.ts"
   },
   "lock": false,
   "tasks": {

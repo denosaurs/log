@@ -3,8 +3,10 @@ import "@denosaurs/log/transforms/text_encoder_stream";
 
 import { ConsoleReadableStream } from "@denosaurs/log";
 
-import { getStdoutWritableStream } from "@denosaurs/log/writables/stdout";
-import { getStderrWritableStream } from "@denosaurs/log/writables/stderr";
+import {
+  StderrWritableStream,
+  StdoutWritableStream,
+} from "@denosaurs/log/writables/std";
 
 import { OmitLogLevelStream } from "@denosaurs/log/transforms/omit";
 import { PickLogLevelStream } from "@denosaurs/log/transforms/pick";
@@ -24,7 +26,7 @@ a
   // Encode the output to an UTF-8 byte stream
   .pipeThrough(new TextEncoderStream())
   // Pipe the output to stdout
-  .pipeTo(getStdoutWritableStream());
+  .pipeTo(new StdoutWritableStream());
 
 b
   // Pick only the error logs
@@ -34,7 +36,7 @@ b
   // Encode the output to an UTF-8 byte stream
   .pipeThrough(new TextEncoderStream())
   // Pipe the output to stderr
-  .pipeTo(getStderrWritableStream());
+  .pipeTo(new StderrWritableStream());
 
 // Log some messages
 console.error("This is going to stderr");

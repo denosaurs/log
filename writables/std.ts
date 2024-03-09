@@ -24,16 +24,7 @@
  */
 
 import { originalConsole } from "../utils/original_console.ts";
-import { environment, isNode } from "../utils/runtime.ts";
-
-let nodeWritableToWeb: (
-  stream: unknown,
-) => WritableStream<Uint8Array> | undefined;
-if (isNode) {
-  nodeWritableToWeb = (await import("node:stream")).Writable.toWeb as (
-    stream: unknown,
-  ) => WritableStream<Uint8Array>;
-}
+import { environment } from "../utils/runtime.ts";
 
 /**
  * A writable stream for standard output or error.
@@ -59,8 +50,12 @@ export class StdWritableStream extends WritableStream<Uint8Array> {
         };
         break;
       case "node":
-        // @ts-expect-error: The type checking environment is deno, the node types are not available
-        sink = nodeWritableToWeb!(globalThis.process[stream]);
+        sink = {
+          write: async (chunk) => {
+            // @ts-expect-error: The type checking environment is deno, the node types are not available
+            await globalThis.process[stream].write(chunk);
+          },
+        };
         break;
       case "browser":
       case "unknown": {

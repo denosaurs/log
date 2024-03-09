@@ -47,7 +47,7 @@ export class StdWritableStream extends WritableStream<Uint8Array> {
           write: async (chunk) => {
             await globalThis.Deno[stream].write(chunk);
           },
-        }
+        };
         break;
       case "bun":
         // Once https://github.com/oven-sh/bun/issues/3927 is completed we can use the node code for bun.
@@ -66,7 +66,9 @@ export class StdWritableStream extends WritableStream<Uint8Array> {
       case "unknown": {
         const decoder = new TextDecoder();
         let buffer = "";
-        const write = stream === "stdout" ? originalConsole.log : originalConsole.error;
+        const write = stream === "stdout"
+          ? originalConsole.log
+          : originalConsole.error;
 
         sink = {
           write: (chunk) => {

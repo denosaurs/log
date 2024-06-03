@@ -1,4 +1,4 @@
-import { Log } from "../mod.ts";
+import type { Log } from "../mod.ts";
 import { originalConsole } from "../utils/original_console.ts";
 
 /**

@@ -37,7 +37,7 @@
  * @module
  */
 
-import { Log } from "../mod.ts";
+import type { Log } from "../mod.ts";
 
 /**
  * Options for the {@link redact} function and the {@link RedactStream}.

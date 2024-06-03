@@ -32,7 +32,7 @@
  * @module
  */
 
-import { Log, LOG_LEVELS, LogLevel } from "../mod.ts";
+import { type Log, LOG_LEVELS, type LogLevel } from "../mod.ts";
 
 /**
  * A transform stream that filters logs based on their log level.

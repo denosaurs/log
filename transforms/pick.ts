@@ -1,4 +1,4 @@
-import { Log, LogLevel } from "../mod.ts";
+import type { Log, LogLevel } from "../mod.ts";
 
 /**
  * A transform stream that picks logs by their log level.

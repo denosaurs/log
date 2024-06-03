@@ -1,7 +1,7 @@
 import { assert, assertStrictEquals } from "jsr:@std/assert";
 import { TextLineStream } from "jsr:@std/streams";
 import { JsonParseStream } from "jsr:@std/json";
-import { Log, LOG_LEVELS } from "../mod.ts";
+import { type Log, LOG_LEVELS } from "../mod.ts";
 
 // deno-lint-ignore no-explicit-any
 export function assertIsLog(log: any): asserts log is Log {

@@ -6,7 +6,7 @@
  * @module
  */
 
-import { Log } from "../mod.ts";
+import type { Log } from "../mod.ts";
 
 /**
  * A transform stream that adds a group or groups to a log entry.

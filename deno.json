@@ -1,6 +1,6 @@
 {
   "name": "@denosaurs/log",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "exports": {
     ".": "./mod.ts",
     "./utils/noop_console": "./utils/noop_console.ts",

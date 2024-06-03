@@ -2,10 +2,10 @@
  * Transfer symbols and their values as is from {@link value} to {@link target}.
  */
 export function transferSymbols<T>(value: T, target: T): T {
-  const properties = Object.getOwnPropertyNames(
-    value,
-  ) as (keyof typeof value)[];
-  const symbols = Object.getOwnPropertySymbols(value) as (keyof typeof value)[];
+  if (value === null || value === undefined) return target;
+
+  const properties = Object.getOwnPropertyNames(value) as (keyof T)[];
+  const symbols = Object.getOwnPropertySymbols(value) as (keyof T)[];
 
   for (const property of properties) {
     const entry = value[property];

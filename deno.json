@@ -1,8 +1,10 @@
 {
   "name": "@denosaurs/log",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "exports": {
     ".": "./mod.ts",
+    "./utils/noop_console": "./utils/noop_console.ts",
+    "./utils/original_console": "./utils/original_console.ts",
     "./transforms/filter": "./transforms/filter.ts",
     "./transforms/omit": "./transforms/omit.ts",
     "./transforms/pick": "./transforms/pick.ts",

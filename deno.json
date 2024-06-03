@@ -6,6 +6,7 @@
     "./utils/noop_console": "./utils/noop_console.ts",
     "./utils/original_console": "./utils/original_console.ts",
     "./transforms/filter": "./transforms/filter.ts",
+    "./transforms/group": "./transforms/group.ts",
     "./transforms/omit": "./transforms/omit.ts",
     "./transforms/pick": "./transforms/pick.ts",
     "./transforms/fast_redact": "./transforms/fast_redact.ts",
